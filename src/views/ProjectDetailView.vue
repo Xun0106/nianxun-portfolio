@@ -7,9 +7,7 @@ const route = useRoute()
 
 const projectId = computed(() => Number(route.params.id))
 
-const project = computed(() =>
-  projects.find((item) => item.id === projectId.value),
-)
+const project = computed(() => projects.find((item) => item.id === projectId.value))
 
 const backToProjects = computed(() => {
   if (!route.query.from) {
@@ -42,13 +40,22 @@ const backToProjects = computed(() => {
           <p class="case-study-summary">{{ project.summary }}</p>
 
           <div class="case-study-tags">
-            <span
-              v-for="tag in project.tags"
-              :key="tag"
-              class="case-study-tag"
-            >
+            <span v-for="tag in project.tags" :key="tag" class="case-study-tag">
               {{ tag }}
             </span>
+          </div>
+
+          <div v-if="project.demoUrl" class="case-study-actions">
+            <a
+              :href="project.demoUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="case-study-live-link"
+            >
+              <span>View Live Project</span>
+              <span aria-hidden="true">↗</span>
+              <span class="case-study-live-link__zh"> 查看團隊成果 </span>
+            </a>
           </div>
         </div>
 
@@ -136,13 +143,8 @@ const backToProjects = computed(() => {
         </p>
 
         <figure class="case-large-image">
-          <img
-            :src="project.sitemapImage"
-            alt="金門水產試驗所改版前後 Sitemap 對照"
-          />
-          <figcaption>
-            Sitemap Before／After｜本人負責資訊架構整理與圖表製作
-          </figcaption>
+          <img :src="project.sitemapImage" alt="金門水產試驗所改版前後 Sitemap 對照" />
+          <figcaption>Sitemap Before／After｜本人負責資訊架構整理與圖表製作</figcaption>
         </figure>
       </section>
 
@@ -194,9 +196,7 @@ const backToProjects = computed(() => {
           <article class="system-card">
             <p class="case-eyebrow">DESIGN SYSTEM</p>
             <h3>建立跨頁面一致的元件語言</h3>
-            <p>
-              為了讓活動、商城與購物流程維持一致，我建立文字階層與多個共用元件規範。
-            </p>
+            <p>為了讓活動、商城與購物流程維持一致，我建立文字階層與多個共用元件規範。</p>
 
             <div class="system-tags">
               <span v-for="item in project.designSystem" :key="item">
@@ -226,9 +226,7 @@ const backToProjects = computed(() => {
 
     <!-- 原本六個作品 -->
     <section v-else class="standard-project-page">
-      <RouterLink :to="backToProjects" class="back-link">
-        ← 回到作品展館
-      </RouterLink>
+      <RouterLink :to="backToProjects" class="back-link"> ← 回到作品展館 </RouterLink>
 
       <div class="case-layout">
         <aside class="case-sidebar" aria-label="作品摘要">
@@ -314,17 +312,11 @@ const backToProjects = computed(() => {
             <div class="gallery-heading">
               <p class="eyebrow">Visual Gallery</p>
               <h2>作品視覺展示</h2>
-              <p>
-                這組圖片記錄了從電影海報色彩觀察，到網頁配色應用練習的視覺轉譯過程。
-              </p>
+              <p>這組圖片記錄了從電影海報色彩觀察，到網頁配色應用練習的視覺轉譯過程。</p>
             </div>
 
             <div class="gallery-grid">
-              <figure
-                v-for="image in project.galleryImages"
-                :key="image"
-                class="gallery-item"
-              >
+              <figure v-for="image in project.galleryImages" :key="image" class="gallery-item">
                 <img :src="image" :alt="`${project.title} 的作品展示圖`" />
               </figure>
             </div>
@@ -384,9 +376,7 @@ const backToProjects = computed(() => {
     <div class="not-found">
       <h1>找不到這件作品</h1>
       <p>這個作品可能不存在，或網址中的 id 不正確。</p>
-      <RouterLink to="/projects" class="back-link">
-        回到作品展館
-      </RouterLink>
+      <RouterLink to="/projects" class="back-link"> 回到作品展館 </RouterLink>
     </div>
   </main>
 </template>
@@ -984,8 +974,18 @@ const backToProjects = computed(() => {
   border: 1px solid rgba(138, 111, 53, 0.2);
   background:
     radial-gradient(circle, rgba(138, 111, 53, 0.28) 0 3px, transparent 4px),
-    radial-gradient(circle, transparent 0 14px, rgba(108, 152, 160, 0.13) 15px 16px, transparent 17px),
-    radial-gradient(circle, transparent 0 25px, rgba(138, 111, 53, 0.12) 26px 27px, transparent 28px);
+    radial-gradient(
+      circle,
+      transparent 0 14px,
+      rgba(108, 152, 160, 0.13) 15px 16px,
+      transparent 17px
+    ),
+    radial-gradient(
+      circle,
+      transparent 0 25px,
+      rgba(138, 111, 53, 0.12) 26px 27px,
+      transparent 28px
+    );
 }
 
 .icon-role::after {
@@ -995,7 +995,12 @@ const backToProjects = computed(() => {
     radial-gradient(circle at 50% 38%, rgba(255, 255, 255, 0.72) 0 5px, transparent 6px),
     radial-gradient(circle at 50% 40%, rgba(138, 111, 53, 0.46) 0 10px, transparent 11px),
     radial-gradient(ellipse at 50% 70%, rgba(108, 152, 160, 0.2) 0 18px, transparent 19px),
-    radial-gradient(circle, transparent 0 25px, rgba(138, 111, 53, 0.12) 26px 27px, transparent 28px),
+    radial-gradient(
+      circle,
+      transparent 0 25px,
+      rgba(138, 111, 53, 0.12) 26px 27px,
+      transparent 28px
+    ),
     linear-gradient(145deg, rgba(255, 255, 255, 0.5), rgba(218, 188, 120, 0.1));
   box-shadow:
     inset 0 2px 4px rgba(255, 255, 255, 0.62),
@@ -1022,9 +1027,12 @@ const backToProjects = computed(() => {
   border-radius: 16px;
   border: 1px solid rgba(138, 111, 53, 0.14);
   background:
-    linear-gradient(rgba(108, 152, 160, 0.16), rgba(108, 152, 160, 0.16)) 14px 15px / 26px 3px no-repeat,
-    linear-gradient(rgba(138, 111, 53, 0.16), rgba(138, 111, 53, 0.16)) 14px 26px / 20px 3px no-repeat,
-    linear-gradient(rgba(108, 152, 160, 0.14), rgba(108, 152, 160, 0.14)) 14px 37px / 28px 3px no-repeat,
+    linear-gradient(rgba(108, 152, 160, 0.16), rgba(108, 152, 160, 0.16)) 14px 15px / 26px 3px
+      no-repeat,
+    linear-gradient(rgba(138, 111, 53, 0.16), rgba(138, 111, 53, 0.16)) 14px 26px / 20px 3px
+      no-repeat,
+    linear-gradient(rgba(108, 152, 160, 0.14), rgba(108, 152, 160, 0.14)) 14px 37px / 28px 3px
+      no-repeat,
     linear-gradient(135deg, rgba(255, 255, 255, 0.44), rgba(244, 246, 239, 0.14));
 }
 
@@ -1178,6 +1186,60 @@ const backToProjects = computed(() => {
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 28px;
+}
+
+.case-study-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.case-study-live-link {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: 1px solid rgba(53, 92, 125, 0.18);
+  border-radius: 999px;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 22% 16%, rgba(255, 255, 255, 0.2), transparent 34%),
+    linear-gradient(135deg, #355c7d, #284e6b);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 14px 32px rgba(53, 92, 125, 0.18);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.case-study-live-link:hover {
+  transform: translateY(-2px);
+  background:
+    radial-gradient(circle at 22% 16%, rgba(255, 255, 255, 0.25), transparent 34%),
+    linear-gradient(135deg, #3f6b8e, #2d5774);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.26),
+    0 18px 38px rgba(53, 92, 125, 0.24);
+}
+
+.case-study-live-link:focus-visible {
+  outline: 3px solid rgba(108, 152, 160, 0.45);
+  outline-offset: 4px;
+}
+
+.case-study-live-link__zh {
+  opacity: 0.78;
+  font-size: 0.82rem;
+  font-weight: 500;
 }
 
 .case-study-tag,
@@ -1609,6 +1671,10 @@ const backToProjects = computed(() => {
   .case-large-image,
   .design-showcase__image {
     border-radius: 20px;
+  }
+
+  .case-study-live-link {
+    width: 100%;
   }
 }
 </style>
