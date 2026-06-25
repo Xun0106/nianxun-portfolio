@@ -169,12 +169,14 @@ function goToProjectDetail(projectId) {
   text-transform: uppercase;
 }
 
-h1 {
+.projects-hero h1 {
   margin: 0 0 24px;
   color: #342f2a;
-  font-size: clamp(2.6rem, 6vw, 4.2rem);
-  line-height: 1.18;
-  letter-spacing: 0.04em;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.2rem);
+  font-weight: 400;
+  line-height: 1.28;
+  letter-spacing: 0.03em;
 }
 
 .intro {
@@ -343,8 +345,9 @@ h1 {
     border-radius: 28px;
   }
 
-  h1 {
-    font-size: clamp(2.2rem, 12vw, 3.2rem);
+  .projects-hero h1 {
+    font-size: clamp(2.3rem, 12vw, 3.2rem);
+    line-height: 1.3;
   }
 
   .intro {

@@ -32,19 +32,23 @@ const router = createRouter({
   ],
 
   scrollBehavior(to, from, savedPosition) {
-    // 使用瀏覽器上一頁 / 下一頁時，優先回到瀏覽器記錄的位置
+    // 使用瀏覽器上一頁或下一頁時，
+    // 回到瀏覽器先前記錄的捲動位置。
     if (savedPosition) {
       return savedPosition
     }
 
-    // 如果只是停留在 /projects 頁面內切換 category query，
-    // 不要捲回頂部，讓使用者留在原本正在瀏覽的位置。
-    if (to.path === '/projects' && from.path === '/projects') {
+    // 在作品列表切換分類 query 時，
+    // 保留使用者目前的瀏覽位置。
+    if (to.path === '/projects' && from.path === '/projects' && to.fullPath !== from.fullPath) {
       return false
     }
 
-    // 其他頁面切換，回到頁面頂部。
-    return { top: 0 }
+    // 前往其他頁面時，從頁面頂端開始。
+    return {
+      top: 0,
+      left: 0,
+    }
   },
 })
 

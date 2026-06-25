@@ -2,6 +2,102 @@ const base = import.meta.env.BASE_URL
 
 export const projects = [
   {
+    id: 7,
+    projectType: 'case-study',
+
+    title: '金門水產試驗所網站改版',
+    subtitle: 'Kinmen Fisheries Research Institute Website Redesign',
+    category: 'UI / UX',
+
+    summary:
+      '重新梳理舊版網站的導覽架構與內容入口，建立一套涵蓋官方資訊、海洋教育、參觀活動與特色商城的新版網站體驗。',
+
+    tags: ['UX Research', 'Information Architecture', 'Wireframe', 'UI Design', 'Design System'],
+
+    featured: true,
+
+    image: `${base}images/projects/kinmen-redesign/cover.png`,
+
+    demoUrl: 'https://nchu-11503-kinmen-fishers.dev-hub.io/',
+
+    overview:
+      '本專題以金門縣水產試驗所既有網站為基礎，重新整理導覽架構、內容入口與跨頁面視覺系統，希望讓參觀、活動、海洋教育與購物等核心任務更容易被理解與完成。',
+
+    role: 'UX Research、Information Architecture、Wireframe Design、UI Design、Design System、AI-assisted Visual Direction',
+
+    contributions: [
+      '舊版網站痛點分析',
+      '使用者旅程與競品分析',
+      'Sitemap 建構',
+      '首頁資訊架構與 Wireframe 設計',
+      '參觀與活動列表頁、詳情頁的 Wireframe 與 Hi-Fi 設計',
+      '特色商城列表頁、商品詳情頁的 Wireframe 與 Hi-Fi 設計',
+      '購物車、結帳流程與空購物車頁面的 Hi-Fi 設計',
+      'Typography、Button、Tag、Chip 元件建立',
+      'AI 圖像需求定義、生成迭代與介面整合',
+      'Sitemap 與甘特圖等簡報圖表支援',
+    ],
+
+    collaboration:
+      '首頁資訊架構與 Wireframe 由我負責，最終首頁 Hi-Fi 由團隊另一位設計師完成；前端實作由其他組員負責。',
+
+    problems: [
+      {
+        title: '導覽與工具功能重疊',
+        description:
+          '舊版網站的導覽列與工具列包含部分相近或重複的功能，使用者不容易理解不同入口之間的差異。',
+        strategy: '重新區分主導覽與工具導覽，將內容入口和語言、會員、購物車等操作功能分開。',
+      },
+      {
+        title: '首頁內容優先順序不清',
+        description:
+          '舊版首頁較著重商城與定義不清的主題旅遊，使參觀、活動與海洋教育等核心內容不容易被理解。',
+        strategy:
+          '重新安排首頁資訊層級，先建立官方定位與核心任務入口，再帶入活動、教育、消息與商城。',
+      },
+      {
+        title: '核心任務缺乏清楚分流',
+        description:
+          '參觀資訊、活動報名、海洋教育與商品瀏覽散落在不同區域，使用者不容易判斷下一步。',
+        strategy: '以五大主入口重整網站內容，並建立參觀、活動、教育與商城等快速入口。',
+      },
+    ],
+
+    sitemapImage: `${base}images/projects/kinmen-redesign/sitemap-before-after.png`,
+
+    designSections: [
+      {
+        key: 'activity',
+        label: 'ACTIVITY EXPERIENCE',
+        title: '參觀與活動',
+        description:
+          '將偏公告式的活動資訊，重新整理為可瀏覽、可理解的活動體驗，強化活動時間、地點、亮點與流程的資訊層級。',
+        image: `${base}images/projects/kinmen-redesign/activity-detail.png`,
+      },
+      {
+        key: 'shop',
+        label: 'FEATURED SHOP',
+        title: '特色商城',
+        description:
+          '在官方網站的可信度與商品導購之間取得平衡，透過用途導購、搜尋、篩選與一致的商品卡系統，協助使用者探索金門海洋特色商品。',
+        image: `${base}images/projects/kinmen-redesign/shop-list.png`,
+      },
+      {
+        key: 'cart',
+        label: 'CART & CHECKOUT',
+        title: '購物車與結帳體驗',
+        description:
+          '透過商品明細、溫層資訊、運費、訂單摘要與流程提示，協助使用者理解目前的購物狀態與下一步操作。',
+        image: `${base}images/projects/kinmen-redesign/cart.png`,
+      },
+    ],
+
+    designSystem: ['Typography', 'Button component', 'Tag component', 'Chip component'],
+
+    aiWorkflow:
+      '我先根據頁面用途定義物種特徵、構圖位置、留白與視覺語氣，再透過提示詞調整、結果篩選與介面測試，讓 AI 生成素材能實際融入網站版面，而不是只作為獨立插圖存在。',
+  },
+  {
     id: 1,
     title: '微光採集誌',
     subtitle: 'Collection of Little Lights',

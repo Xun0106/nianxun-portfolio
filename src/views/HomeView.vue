@@ -1,31 +1,43 @@
 <script setup>
 import { computed, onMounted, onBeforeUnmount } from 'vue'
-import { useRouter } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import { projects } from '@/data/projects'
 import ProjectCard from '@/components/ProjectCard.vue'
 
 const router = useRouter()
 
-const featuredProjects = computed(function () {
-  return projects.filter(function (project) {
-    return project.featured === true
+const featuredCaseStudy = computed(function () {
+  return projects.find(function (project) {
+    return project.projectType === 'case-study' && project.featured === true
   })
+})
+
+const featuredProjects = computed(function () {
+  return projects
+    .filter(function (project) {
+      return project.projectType !== 'case-study' && project.featured === true
+    })
+    .slice(0, 3)
 })
 
 const profileCards = [
   {
-    title: 'Front-End Learning',
-    description: '學習 HTML、CSS、JavaScript 與 Vue，練習用資料流、元件化與路由架構組織網頁作品。',
+    title: 'Strategy & Information Architecture',
+    subtitle: '企劃思考與資訊架構',
+    description:
+      '從使用者需求、內容脈絡與任務流程中梳理問題，將複雜資訊重新分類、排序與命名，建立清楚且容易理解的網站結構。',
   },
   {
-    title: 'Creative Storytelling',
+    title: 'UI / UX & Visual Sensibility',
+    subtitle: '介面設計與美感判斷',
     description:
-      '來自音樂、手碟、Podcast、文字創作與教學背景，喜歡從感受、故事與使用者情境出發建構作品。',
+      '從色彩、文字比例、畫面間距與資訊排列中細看每一處細節，讓內容能被自然理解、操作能夠順暢，也在反覆調整之間，找到功能與美感彼此協調的位置。',
   },
   {
-    title: 'AI-assisted Workflow',
+    title: 'Front-End & AI Workflow',
+    subtitle: '前端理解與 AI 協作流程',
     description:
-      '透過 AI 協作進行需求拆解、程式學習、視覺迭代與除錯，並在反覆調整中建立自己的前端理解。',
+      '具備 HTML、CSS、JavaScript 與 Vue 的學習背景，能在設計與實作之間理解版面、互動與技術條件，並運用 AI 協助需求拆解、視覺迭代、程式理解與除錯。',
   },
 ]
 
@@ -58,7 +70,7 @@ onBeforeUnmount(function () {
   <section class="home-page">
     <section class="hero-section">
       <div class="hero-content">
-        <p class="eyebrow">Front-End Learning Portfolio</p>
+        <p class="eyebrow">UI / UX & Visual Design Portfolio</p>
 
         <h1 class="hero-title">
           <span>採集聲音與故事，</span>
@@ -69,13 +81,12 @@ onBeforeUnmount(function () {
         </h1>
 
         <p class="intro">
-          我是一位正在學習前端開發的創作者，透過 Vue、JavaScript、視覺設計與 AI-assisted
-          workflow，將音樂、敘事、生活觀察與使用者體驗，整理成一件件可被瀏覽、理解與互動的網頁作品。
+          具有前端學習背景，並對視覺細節與使用者感受保持敏銳。從內容梳理、資訊層級到色彩、文字比例與操作情境，反覆推敲每一項選擇，將複雜構想整理成清楚、細膩且容易理解的網頁體驗。
         </p>
 
         <div class="hero-actions">
-          <RouterLink to="/projects" class="primary-link">查看作品集</RouterLink>
-          <RouterLink to="/skills" class="secondary-link">查看技能整理</RouterLink>
+          <RouterLink to="/projects" class="primary-link">瀏覽作品集</RouterLink>
+          <RouterLink to="/skills" class="secondary-link">看看我的設計思路</RouterLink>
         </div>
       </div>
 
@@ -86,29 +97,80 @@ onBeforeUnmount(function () {
 
     <section class="snapshot-section" aria-labelledby="snapshot-title">
       <div class="section-heading">
-        <p class="eyebrow">About Snapshot</p>
-        <h2 id="snapshot-title">我正在建立的三種能力</h2>
+        <p class="eyebrow">Core Capabilities</p>
+        <h2 id="snapshot-title">我的三項核心能力</h2>
+      </div>
+
+      <div class="profile-grid">
+        <article v-for="(card, index) in profileCards" :key="card.title" class="profile-card">
+          <p class="profile-index">0{{ index + 1 }}</p>
+
+          <h3>{{ card.title }}</h3>
+
+          <p class="profile-subtitle">
+            {{ card.subtitle }}
+          </p>
+
+          <p class="profile-description">
+            {{ card.description }}
+          </p>
+        </article>
       </div>
     </section>
 
-    <div class="profile-grid">
-      <article v-for="(card, index) in profileCards" :key="card.title" class="profile-card">
-        <p class="profile-index">0{{ index + 1 }}</p>
+    <section class="featured-section" aria-labelledby="featured-case-title">
+      <!-- 核心專題 -->
+      <div class="section-heading featured-case-heading">
+        <p class="eyebrow">Featured Case Study</p>
+        <h2 id="featured-case-title">核心專題</h2>
 
-        <h3>{{ card.title }}</h3>
-
-        <p>{{ card.description }}</p>
-      </article>
-    </div>
-
-    <section class="featured-section" aria-labelledby="featured-title">
-      <div class="section-heading">
-        <p class="eyebrow">Featured Projects</p>
-        <h2 id="featured-title">精選作品</h2>
         <p>
-          這三件作品分別代表目前最想延伸的方向：個人策展型 Vue 作品、嚴肅資訊的柔性轉譯，<br
-            class="desktop-break"
-          />以及帶有心理設計感的 JavaScript 工具。
+          從舊站問題梳理、使用者需求與資訊架構出發，逐步完成核心頁面與設計系統，記錄網站改版如何從分析轉化為具體介面。
+        </p>
+      </div>
+
+      <RouterLink
+        v-if="featuredCaseStudy"
+        :to="`/projects/${featuredCaseStudy.id}`"
+        class="featured-case-card"
+      >
+        <div class="featured-case-card__image">
+          <img :src="featuredCaseStudy.image" :alt="`${featuredCaseStudy.title}專題封面`" />
+        </div>
+
+        <div class="featured-case-card__content">
+          <p class="featured-case-card__category">UX / UI WEBSITE REDESIGN</p>
+
+          <h3>{{ featuredCaseStudy.title }}</h3>
+
+          <p class="featured-case-card__subtitle">
+            {{ featuredCaseStudy.subtitle }}
+          </p>
+
+          <p class="featured-case-card__summary">
+            {{ featuredCaseStudy.summary }}
+          </p>
+
+          <div class="featured-case-card__tags">
+            <span v-for="tag in featuredCaseStudy.tags.slice(0, 4)" :key="tag">
+              {{ tag }}
+            </span>
+          </div>
+
+          <span class="featured-case-card__action">
+            查看完整專題
+            <span aria-hidden="true">↗</span>
+          </span>
+        </div>
+      </RouterLink>
+
+      <!-- 其他精選作品 -->
+      <div class="section-heading secondary-project-heading">
+        <p class="eyebrow">Interactive Projects</p>
+        <h2>精選互動作品</h2>
+
+        <p>
+          透過Vue、JavaScript與視覺設計，將故事、生活觀察與互動概念轉化為可瀏覽、可操作的網頁作品。
         </p>
       </div>
 
@@ -123,21 +185,17 @@ onBeforeUnmount(function () {
     </section>
 
     <section class="ai-section" aria-labelledby="ai-title">
-      <p class="eyebrow">AI-assisted Learning</p>
+      <p class="eyebrow">Design Process & AI Workflow</p>
 
-      <h2 id="ai-title">關於我與 AI 的協作方式</h2>
-
-      <p>本作品集中的多數專案為 AI-assisted learning projects。</p>
+      <h2 id="ai-title">設計思考與 AI 協作方式</h2>
 
       <p>
-        我負責主題發想、需求規劃、使用者流程設計、視覺方向選擇、Prompt
-        撰寫、測試回饋與程式碼理解；AI
-        則協助我進行程式碼產出、語法除錯、設計方案延伸與學習步驟拆解。
+        從需求梳理、資訊架構到視覺方向與介面調整，透過反覆觀察與測試，逐步確認內容是否清楚、操作是否自然，以及不同頁面是否維持一致的設計語言。
       </p>
 
       <p>
-        對我來說，AI
-        不是取代人類思考的捷徑，而是一位可以與我激盪靈感、反覆打磨、協助除錯，並陪伴我理解前端概念的開發陪跑者。
+        過程中運用 AI
+        協助拆解問題、延伸設計方案、理解程式結構與排除錯誤；重要的企劃判斷、視覺選擇與修改方向，則依據專案目標與使用者感受進行取捨。
       </p>
     </section>
   </section>
@@ -178,10 +236,11 @@ onBeforeUnmount(function () {
   max-width: 660px;
   margin: 0 0 34px;
   color: #342f2a;
+  font-family: var(--font-display);
   font-size: clamp(2.6rem, 4.4vw, 3.65rem);
-  line-height: 1.22;
-  letter-spacing: 0.04em;
-  font-weight: 900;
+  font-weight: 400;
+  line-height: 1.28;
+  letter-spacing: 0.02em;
 }
 
 .hero-title span {
@@ -206,47 +265,100 @@ onBeforeUnmount(function () {
   letter-spacing: 0.02em;
 }
 
+/* ========================================
+   Homepage Button System
+   首頁按鈕統一設定
+======================================== */
+
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 12px;
   margin-top: 32px;
 }
 
 .primary-link,
-.secondary-link {
+.secondary-link,
+.featured-case-card__action {
   display: inline-flex;
+  min-height: 48px;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
-  padding: 10px 20px;
+  gap: 8px;
+  padding: 12px 20px;
+  border: 1px solid transparent;
   border-radius: 999px;
-  font-weight: 800;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.025em;
   text-decoration: none;
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
+    color 0.2s ease,
+    background 0.2s ease,
     border-color 0.2s ease,
-    background-color 0.2s ease;
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
 
-.primary-link {
-  color: #342f2a;
-  border: 1px solid rgba(138, 111, 53, 0.32);
-  background: linear-gradient(135deg, rgba(218, 188, 120, 0.46), rgba(255, 255, 255, 0.72));
-  box-shadow: 0 12px 28px rgba(138, 111, 53, 0.14);
-}
-
-.secondary-link {
-  color: #5e574f;
-  border: 1px solid rgba(138, 111, 53, 0.18);
-  background: rgba(255, 255, 255, 0.48);
+.primary-link,
+.featured-case-card__action {
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 22% 16%, rgba(255, 255, 255, 0.2), transparent 34%),
+    linear-gradient(135deg, #355c7d, #284e6b);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 14px 30px rgba(53, 92, 125, 0.18);
 }
 
 .primary-link:hover,
-.secondary-link:hover {
+.featured-case-card:hover .featured-case-card__action {
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 22% 16%, rgba(255, 255, 255, 0.25), transparent 34%),
+    linear-gradient(135deg, #3f6b8e, #2d5774);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.26),
+    0 18px 38px rgba(53, 92, 125, 0.24);
   transform: translateY(-2px);
-  box-shadow: 0 16px 36px rgba(52, 47, 42, 0.1);
+}
+
+.secondary-link {
+  border-color: rgba(53, 92, 125, 0.16);
+  color: #355c7d;
+  background:
+    radial-gradient(circle at 24% 18%, rgba(255, 255, 255, 0.86), transparent 36%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(214, 232, 239, 0.42));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.84),
+    0 10px 24px rgba(53, 92, 125, 0.07);
+}
+
+.secondary-link:hover {
+  border-color: rgba(53, 92, 125, 0.3);
+  color: #284e6b;
+  background:
+    radial-gradient(circle at 24% 18%, rgba(255, 255, 255, 0.92), transparent 36%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(214, 232, 239, 0.62));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 14px 30px rgba(53, 92, 125, 0.12);
+  transform: translateY(-2px);
+}
+
+.primary-link:focus-visible,
+.secondary-link:focus-visible,
+.featured-case-card:focus-visible {
+  outline: 3px solid rgba(108, 152, 160, 0.45);
+  outline-offset: 4px;
+}
+
+.featured-case-card__action {
+  width: fit-content;
+  margin-top: 32px;
+  pointer-events: none;
 }
 
 .resonance-orb {
@@ -317,8 +429,126 @@ onBeforeUnmount(function () {
   max-width: 780px;
 }
 
-.desktop-break {
+.featured-case-heading {
+  margin-bottom: 0;
+}
+
+.featured-case-card {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(360px, 0.75fr);
+  align-items: center;
+  margin-bottom: 56px;
+  border: 1px solid rgba(53, 92, 125, 0.1);
+  border-radius: 32px;
+  color: inherit;
+  background:
+    radial-gradient(circle at 88% 10%, rgba(214, 232, 239, 0.5), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(247, 246, 243, 0.82));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 28px 76px rgba(53, 92, 125, 0.1);
+  text-decoration: none;
+  transition:
+    transform 0.28s ease,
+    border-color 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+.featured-case-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(53, 92, 125, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.94),
+    0 38px 90px rgba(53, 92, 125, 0.16);
+}
+
+.featured-case-card:focus-visible {
+  outline: 3px solid rgba(108, 152, 160, 0.45);
+  outline-offset: 5px;
+}
+
+.featured-case-card__image {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f7f6f3;
+}
+
+.featured-case-card__image img {
   display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.5s ease;
+}
+
+.featured-case-card:hover .featured-case-card__image img {
+  transform: scale(1.01);
+}
+
+.featured-case-card__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 44px 40px;
+}
+
+.featured-case-card__category {
+  margin: 0 0 18px;
+  color: #9b7f43;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.6;
+  letter-spacing: 0.12em;
+}
+
+.featured-case-card__content h3 {
+  margin: 0;
+  color: #355c7d;
+  font-size: clamp(2rem, 2.7vw, 2.7rem);
+  line-height: 1.16;
+  letter-spacing: -0.035em;
+}
+
+.featured-case-card__subtitle {
+  margin: 14px 0 0;
+  color: #70808a;
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.featured-case-card__summary {
+  margin: 24px 0 0;
+  color: #53616a;
+  font-size: 0.96rem;
+  line-height: 1.85;
+}
+
+.featured-case-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 26px;
+}
+
+.featured-case-card__tags span {
+  padding: 7px 11px;
+  border: 1px solid rgba(53, 92, 125, 0.13);
+  border-radius: 999px;
+  color: #355c7d;
+  background: rgba(255, 255, 255, 0.68);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.secondary-project-heading {
+  margin-top: 8px;
 }
 
 .section-heading {
@@ -344,7 +574,6 @@ onBeforeUnmount(function () {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 22px;
-  margin-top: -48px;
 }
 
 .profile-card,
@@ -363,7 +592,7 @@ onBeforeUnmount(function () {
 
 .profile-card {
   position: relative;
-  min-height: 230px;
+  min-height: 300px;
   padding: 28px;
   overflow: hidden;
   isolation: isolate;
@@ -465,12 +694,6 @@ onBeforeUnmount(function () {
   );
 }
 
-.profile-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(138, 111, 53, 0.28);
-  box-shadow: 0 24px 64px rgba(52, 47, 42, 0.1);
-}
-
 .profile-index {
   position: relative;
   z-index: 1;
@@ -484,19 +707,41 @@ onBeforeUnmount(function () {
 .profile-card h3 {
   position: relative;
   z-index: 1;
-  margin: 0 0 14px;
+  margin: 0;
   color: #342f2a;
-  font-size: 1.28rem;
-  line-height: 1.35;
+  font-size: 1.22rem;
+  line-height: 1.4;
   letter-spacing: -0.01em;
 }
 
-.profile-card p {
+.profile-subtitle {
+  position: relative;
+  z-index: 1;
+  margin: 8px 0 16px;
+  color: rgba(138, 111, 53, 0.9);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+}
+
+.profile-description {
   position: relative;
   z-index: 1;
   margin: 0;
   color: rgba(94, 87, 79, 0.92);
+  font-size: 0.96rem;
   line-height: 1.85;
+}
+
+.profile-index {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 28px;
+  color: rgba(138, 111, 53, 0.72);
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
 }
 
 .project-grid {
@@ -527,9 +772,33 @@ onBeforeUnmount(function () {
   .project-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .featured-case-card {
+    grid-template-columns: 1fr;
+  }
+
+  .featured-case-card__image {
+    min-height: auto;
+    aspect-ratio: 8 / 5;
+  }
+
+  .featured-case-card__content {
+    padding: 38px;
+  }
 }
 
 @media (max-width: 640px) {
+  .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .primary-link,
+  .secondary-link {
+    width: 100%;
+  }
+
   .hero-section {
     position: relative;
     overflow: hidden;
@@ -568,10 +837,6 @@ onBeforeUnmount(function () {
     transform: rotate(calc(var(--hero-orb-progress, 0) * 20deg));
   }
 
-  .orb-core {
-    width: 220px;
-  }
-
   .profile-card {
     min-height: auto;
     padding: 24px;
@@ -591,16 +856,58 @@ onBeforeUnmount(function () {
     bottom: -48px;
   }
 
-  .profile-grid {
-    margin-top: -32px;
+  .profile-grid,
+  .project-grid {
+    grid-template-columns: 1fr;
   }
 
-  .desktop-break {
-    display: none;
+  .featured-case-card {
+    min-height: auto;
+    margin-bottom: 48px;
+    border-radius: 24px;
+  }
+
+  .featured-case-card__image {
+    aspect-ratio: 8 / 5;
+  }
+
+  .featured-case-card__content {
+    padding: 28px 24px 30px;
+  }
+
+  .featured-case-card__content h3 {
+    font-size: clamp(1.85rem, 9vw, 2.4rem);
+  }
+
+  .featured-case-card__summary {
+    margin-top: 20px;
+  }
+
+  .featured-case-card__action {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .primary-link:hover,
+  .secondary-link:hover,
+  .featured-case-card:hover .featured-case-card__action {
+    transform: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .primary-link,
+  .secondary-link,
+  .featured-case-card__action {
+    transition: none;
+  }
+
+  .primary-link:hover,
+  .secondary-link:hover,
+  .featured-case-card:hover .featured-case-card__action {
+    transform: none;
+  }
+
   .resonance-orb {
     transform: translateY(-24px);
   }
